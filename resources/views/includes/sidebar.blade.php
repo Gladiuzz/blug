@@ -1,0 +1,62 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <img alt="image" class="rounded-circle" width="50" height="50" src="{{ asset('storage/user/'. Auth::user()->avatar) }}" />
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="block m-t-xs font-bold">{{ Auth::user()->name }}</span>
+                        <span class=" text-xs block">{{ Auth::user()->role }}<b class="caret"></b></span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <li>
+                                <button class="border-0 dropdown-item p-2 bg-transparent logout">Log out</button>
+                            </li>
+                        </form>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    Blug
+                </div>
+            </li>
+            <li class="{{ Request::path() == '/dashboard' ? 'active' : '' }}">
+                <a href="/dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+            </li>
+            <li class="{{ Request::path() == '/posts' ? 'active' : '' }}">
+                <a href="/post"><i class="fa fa-clipboard"></i> <span class="nav-label">Posts</span>
+                </a>
+            </li>
+            @if (Auth::user()->role == 'Admin')
+                <li class="{{ Request::path() == 'post-category' ? 'active' : '' }}">
+                    <a href="/post-category"><i class="fa fa-list"></i> <span class="nav-label">Categorys</span> </a>
+                </li>
+                <li class="{{ Request::path() == 'user' ? 'active' : '' }}">
+                    <a href="/user"><i class="fa fa-user"></i> <span class="nav-label">Users</span> </a>
+                </li>
+            @endif
+            {{-- <li class="{{ Request::path() == 'product-name' ? 'active' : '' }}">
+                <a href="/product-name"><i class="fa fa-tags"></i> <span class="nav-label"> Nama Produk</span> </a>
+            </li>
+            <li class="{{ Request::path() == 'monitoring' ? 'active' : '' }}">
+                <a href="/monitoring"><i class="fa fa-desktop"></i> <span class="nav-label">Monitoring
+                        Penjual</span>
+                </a>
+            </li> --}}
+            {{-- <li class="{{ Request::path() == 'contact' ? 'active' : '' }}">
+                <a href="/contact"><i class="fa fa-phone"></i> <span class="nav-label">Kelola Kontak</span> </a>
+            </li> --}}
+            {{-- <li class="{{ Request::path() == '/user' ? 'active' : '' }}">
+                <a href="/user"><i class="fa fa-user"></i> <span class="nav-label">Kelola User</span><span
+                        class="fa arrow"></span> </a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="/user-customer">Customer</a></li>
+                    <li><a href="/user-seller">Seller</a></li>
+                    <li><a href="/user-driver">Driver</a></li>
+                </ul>
+            </li> --}}
+        </ul>
+
+    </div>
+</nav>
