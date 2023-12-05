@@ -17,6 +17,6 @@ class Category extends Model
 
     public function post()
     {
-        return $this->hasMany(Post::class, 'category_id', 'id');
+        return $this->belongsToMany(Post::class, 'post_category', 'category_id', 'post_id')->withTimestamps();
     }
 }

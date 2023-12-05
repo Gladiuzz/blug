@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class PostCategoryController extends Controller
      */
     public function index()
     {
-        $category = PostCategory::all();
+        $category = Category::all();
 
         return view('admin.post-category.index', compact('category'));
     }
@@ -42,7 +43,7 @@ class PostCategoryController extends Controller
         ]);
 
         $data = $request->except('_token');
-        PostCategory::create($data);
+        Category::create($data);
 
         return redirect()->route('post-category.index')->with('success','Category post created successfully');
     }
@@ -66,7 +67,7 @@ class PostCategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = PostCategory::findorFail($id);
+        $category = Category::findorFail($id);
 
         return view('admin.post-category.manage', compact('category'));
     }
@@ -84,7 +85,7 @@ class PostCategoryController extends Controller
             'name' => ['required', 'string', 'min:5']
         ]);
 
-        $category = PostCategory::findorFail($id);
+        $category = Category::findorFail($id);
         $data = $request->except('_token');
 
         $category->update($data);
@@ -100,10 +101,10 @@ class PostCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = PostCategory::findorFail($id);
+        $category = Category::findorFail($id);
 
         $category->delete();
 
-        return redirect()->route('post-category.index')->with('success', 'Category post updated successfully');
+        return redirect()->route('post-category.index')->with('success', 'Category post deleted successfully');
     }
 }

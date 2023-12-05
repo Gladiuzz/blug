@@ -24,7 +24,7 @@
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Username / Email</label>
                                 <input type="text" class="form-control" id="floatingInput" name="username"
-                                    placeholder="name@example.com">
+                                    placeholder="name@example.com" value="{{ old('username') }}">
                                 @error('username')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

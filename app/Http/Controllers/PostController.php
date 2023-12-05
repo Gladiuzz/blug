@@ -8,6 +8,7 @@ use App\Models\PostCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -18,7 +19,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::all();
+        if (Auth::user()->role == 'Admin') {
+            $post = Post::all();
+        } else {
+            $post = Post::where('author_id', Auth::user()->id)
+                ->get();
+        }
 
         return view('admin.post.index', compact('post'));
     }
@@ -35,11 +41,11 @@ class PostController extends Controller
         } else {
             $user = Auth::user();
         }
-        $category = Category::all();
+        $categories = Category::all();
 
         $data = array(
             'user' => $user,
-            'category' => $category,
+            'categories' => $categories,
         );
 
         return view('admin.post.manage', $data);
@@ -75,15 +81,16 @@ class PostController extends Controller
 
             $post = Post::create($data);
 
+
             foreach ($categorys as $key => $value) {
                 PostCategory::create([
                     'post_id' => $post->id,
-                    'category_id' => $value['id'],
+                    'category_id' => $value,
                 ]);
             }
         }
 
-        return redirect()->route('post.index')->with('success','Post created successfully');
+        return redirect()->route('post.index')->with('success', 'Post created successfully');
     }
 
     /**
@@ -94,7 +101,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findorFail($id);
+
+        return view('admin.post.show', compact('post'));
     }
 
     /**
@@ -105,7 +114,21 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findorFail($id);
+        if (Auth::user()->role == 'Admin') {
+            $user = User::all();
+        } else {
+            $user = Auth::user();
+        }
+        $categories = Category::all();
+
+        $data = array(
+            'user' => $user,
+            'categories' => $categories,
+            'post' => $post,
+        );
+
+        return view('admin.post.manage', $data);
     }
 
     /**
@@ -117,7 +140,35 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'author_id' => ['required'],
+            // 'thumbnail' => ['required'],
+            'title' => ['required', 'min:5'],
+            'content' => ['required', 'min:5'],
+            'categorys' => ['required']
+        ]);
+
+        $post = Post::findorFail($id);
+        $data = $request->except('_token');
+        $categorys = $data['categorys'];
+
+        $image = $request->file('thumbnail');
+
+        if (!empty($image)) {
+            $old_path = 'public/post/' . $post->thumbnail;
+            Storage::delete($old_path);
+
+            $file_name = time() . "_" . $image->getClientOriginalName();
+            $image->storeAs('public/post', $file_name);
+
+            $data['thumbnail'] = $file_name;
+        }
+
+        $post->update($data);
+        $post->categories()->sync($categorys);
+
+
+        return redirect()->route('post.index')->with('success', 'Post updated successfully');
     }
 
     /**
@@ -128,6 +179,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findorFail($id);
+
+        $thumbnail_path = 'public/post/' . $post->thumbnail;
+        Storage::delete($thumbnail_path);
+
+        $post->categories()->detach();
+        $post->delete();
+
+        return redirect()->route('post.index')->with('success', 'Post deleted successfully');
     }
 }

@@ -114,6 +114,16 @@ class UserController extends Controller
             $data['password'] = $user->password;
         }
 
+        if (!empty($image)) {
+            $old_path = 'public/user/' . $user->avatar;
+            Storage::delete($old_path);
+
+            $file_name = time() . "_" . $image->getClientOriginalName();
+            $image->storeAs('public/user', $file_name);
+
+            $data['avatar'] = $file_name;
+        }
+
         $user->update($data);
 
         return redirect()->route('user.index')->with('success', 'User updated successfully');

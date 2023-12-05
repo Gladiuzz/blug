@@ -16,7 +16,7 @@
         <div class="ibox-title">
             <h5>Data Post</h5>
             <div class="ibox-tools">
-                <a href="{{ route('user.create') }}" class="border border-dark rounded bg-dark p-2">
+                <a href="{{ route('post.create') }}" class="border border-dark rounded bg-dark p-2">
                     <i class="fa fa-plus"></i>
                     Add Post
                 </a>
@@ -43,8 +43,14 @@
                                         src="{{ asset('storage/user/' . $item->avatar) }}" /></td> --}}
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->author->name }}</td>
-                                <td>{{ $item->postCategory }}</td>
-                                <td>{{ $item->status }}</td>
+                                <td>
+                                    @foreach ($item->categories as $category)
+                                    <small class="label label-secondary mr-1    "> {{ $category->name }}</small>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <small class="label label-success mr-1    "> {{ $item->status }}</small>
+                                </td>
                                 <td>
                                     <a href="{{ route('post.show', ['post' => $item->id]) }}"><i
                                             class='fa btn btn-primary fa-eye'></i></a>

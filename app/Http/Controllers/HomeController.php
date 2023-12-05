@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (Auth::user()->role == 'Admin') {
+            $post = Post::count();
+        } else {
+            $post = Post::where('author_id', Auth::user()->id)
+                ->count();
+        }
+
+        return view('home', compact('post'));
     }
 }

@@ -3,12 +3,21 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <img alt="image" class="rounded-circle" width="50" height="50" src="{{ asset('storage/user/'. Auth::user()->avatar) }}" />
+                    <center>
+                        <div class="avatar-container rounded-circle">
+                            <img src="{{ asset('storage/user/' . Auth::user()->avatar) }}" class="avatar-img"
+                                alt="Avatar">
+                        </div>
+                    </center>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="block m-t-xs font-bold">{{ Auth::user()->name }}</span>
                         <span class=" text-xs block">{{ Auth::user()->role }}<b class="caret"></b></span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                            <a href="{{ route('profile.index') }}"
+                                class="border-0 dropdown-item p-2 bg-transparent logout">Profile</a>
+                        </li>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <li>

@@ -26,7 +26,7 @@
                                     </div>
                                     <div class="col-8 text-right">
                                         <span> Total Posts</span>
-                                        <h3 class="font-bold">0</h3>
+                                        <h3 class="font-bold">{{ $post }}</h3>
                                     </div>
                                 </div>
                             </div>

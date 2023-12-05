@@ -35,6 +35,8 @@
                         <div class="mt-3">
                             <button class="btn btn-sm btn-primary w-100" type="submit"><strong>Simpan</strong></button>
                         </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,9 @@ Auth::routes();
 
 // For logged in users
 Route::group(['middleware' => 'auth'], function() {
+
     // Dashboard
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     // Category Post
     Route::resource('post-category', PostCategoryController::class);
@@ -31,5 +33,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Post
     Route::resource('post', PostController::class);
+
+    // Profile
+    Route::resource('profile', ProfileController::class);
 });
 
