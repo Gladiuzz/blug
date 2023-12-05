@@ -16,7 +16,7 @@
 <li><strong>User Interaction:</strong> Provide responses, comments, and evaluations on posts.</li>
 <li><strong>Categorization and Tagging:</strong> Efficient organization through categories and tagging for easy discovery by other users.</li>
 <li><strong>User Profiles:</strong> Customizable profiles with information, photos, and writer portfolios.</li>
-<li><strong>Notifications:</strong> Receive alerts about responses, comments, or new followers.</li>
+<!-- <li><strong>Notifications:</strong> Receive alerts about responses, comments, or new followers.</li> -->
 </ul>
 </div>
 </body>
