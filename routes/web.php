@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -12,11 +13,13 @@ use Illuminate\Support\Facades\Route;
 // Kelas : IF - 5
 // ------------------------------------
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'index'])->name('landing-page');
+
+Route::group(['prefix' => 'blog'], function() {
+    Route::get('/post-detail/{title}', [HomeController::class, 'postDetail'])->name('post-detail');
 });
 
-// From laravel UI
+// From laravel auth
 Auth::routes();
 
 // For logged in users

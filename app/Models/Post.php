@@ -31,4 +31,10 @@ class Post extends Model
         return Carbon::parse($this->attributes['created_at'])
         ->translatedFormat('l, d F Y');
     }
+
+    public function getShortDate()
+    {
+        return Carbon::parse($this->attributes['created_at'])
+        ->translatedFormat('d M Y');
+    }
 }
