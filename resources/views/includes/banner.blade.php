@@ -5,7 +5,7 @@
                 <h1 class="mb-5">What Would You <br> Like To Read Today?</h1>
                 <ul class="list-inline widget-list-inline">
                     @foreach ($category as $item)
-                        <li class="list-inline-item"><a href="tags.html">{{ $item->name }}</a></li>
+                        <li class="list-inline-item"><a href="{{ route('blog', ['tag' => $item->name]) }}">{{ $item->name }}</a></li>
                     @endforeach
                 </ul>
             </div>

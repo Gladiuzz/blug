@@ -62,7 +62,7 @@ class PostController extends Controller
         $this->validate($request, [
             'author_id' => ['required'],
             'thumbnail' => ['required'],
-            'title' => ['required', 'min:5'],
+            'title' => ['required', 'min:5', 'unique:posts,title'],
             'content' => ['required', 'min:5'],
             'categorys' => ['required']
         ]);
@@ -143,7 +143,7 @@ class PostController extends Controller
         $this->validate($request, [
             'author_id' => ['required'],
             // 'thumbnail' => ['required'],
-            'title' => ['required', 'min:5'],
+            'title' => ['required', 'min:5', 'unique:posts,title,'.$id],
             'content' => ['required', 'min:5'],
             'categorys' => ['required']
         ]);

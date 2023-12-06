@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('landing-page');
 
 Route::group(['prefix' => 'blog'], function() {
-    Route::get('/post-detail/{title}', [HomeController::class, 'postDetail'])->name('post-detail');
+    Route::get('/', [HomeController::class, 'blog'])->name('blog');
+    Route::get('/{title}', [HomeController::class, 'blogDetail'])->name('blog-detail');
 });
 
 // From laravel auth

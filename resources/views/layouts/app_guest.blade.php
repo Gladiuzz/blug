@@ -46,20 +46,24 @@
     <header class="navigation fixed-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-white">
-                <a class="navbar-brand order-1" href="index.html">
+                <a class="navbar-brand order-1" href="{{ route('landing-page') }}">
                     <img class="img-fluid" width="100px" src="{{ asset('guest/images/logo.png') }}" alt="Blog Icon">
                 </a>
                 <div class="collapse navbar-collapse text-center order-lg-2 order-3" id="navigation">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Blog</a>
+                            <a class="nav-link" href="{{ route('blog') }}">Blog</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="shop.html">About</a>
                         </li>
                         @if (Auth::user())
                             <li class="nav-item">
-                                <a class="nav-link" href="shop.html">{{ Auth::user()->name }}</a>
+                                <a class="nav-link" href="{{ route('home') }}">{{ Auth::user()->name }}</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">Login</a>
                             </li>
                         @endif
                     </ul>
@@ -68,8 +72,8 @@
                 <div class="order-2 order-lg-3 d-flex align-items-center">
 
                     <!-- search -->
-                    <form class="search-bar">
-                        <input id="search-query" name="s" type="search" placeholder="Type &amp; Hit Enter...">
+                    <form class="search-bar" method="GET" action="{{ route('blog') }}">
+                        <input id="search-query" name="search" type="search"  placeholder="Type &amp; Hit Enter...">
                     </form>
 
                     <button class="navbar-toggler border-0 order-1" type="button" data-toggle="collapse"

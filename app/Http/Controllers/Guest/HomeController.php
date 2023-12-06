@@ -12,11 +12,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $user = User::where('role', '!=' ,'Admin')
-        ->get();
+        $user = User::where('role', '!=', 'Admin')
+            ->get();
         $post = Post::take(5)
-        ->orderBy('id', 'desc')
-        ->get();
+            ->orderBy('id', 'desc')
+            ->get();
 
         $category = Category::all();
 
@@ -30,13 +30,51 @@ class HomeController extends Controller
         return view('welcome', $data);
     }
 
-    public function postDetail($title)
+    public function blog(Request $request)
     {
+        $user = User::where('role', '!=', 'Admin')
+            ->get();
         $category = Category::all();
-        $post = Post::where('title', $title)
-        ->first();
 
+        $search = $request->search;
+        $tag = $request->tag;
 
+        $post = Post::query()
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->whereHas('categories', function ($query) use ($tag) {
+                $query->where('name', 'like', '%' . $tag . '%');
+            })
+            ->orderBy('id', 'desc')
+            ->get();
+
+        // if ($search) {
+        //     $post = Post::orderBy('id', 'desc')
+        //         ->where('title', 'like', '%' . $search . '%')
+        //         ->get();
+        // } else {
+        //     $post = Post::orderBy('id', 'desc')
+        //         ->get();
+        // }
+
+        $data = array(
+            'search' => $search,
+            'post' => $post,
+            'user' => $user,
+            'tag' => $tag,
+            'category' => $category,
+        );
+
+        return view('guest.post.posts', $data);
+    }
+
+    public function blogDetail($title)
+    {
+        $post = Post::where('title', 'like', '%' . $title . '%')
+            ->first();
+
+        // dd($title);
 
         return view('guest.post.post_detail', compact('post'));
     }
