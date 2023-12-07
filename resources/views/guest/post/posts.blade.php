@@ -1,5 +1,7 @@
 @extends('layouts.app_guest')
 
+@section('title', 'Blug | Posts' )
+
 
 @section('content')
     <section class="section">
@@ -24,7 +26,7 @@
                                 <h3 class="mb-3"><a class="post-title" href="{{ route('blog-detail', ['title' => $item->title]) }}">{{ $item->title }}</a></h3>
                                 <ul class="card-meta list-inline">
                                     <li class="list-inline-item">
-                                        <a href="author-single.html" class="card-meta-author">
+                                        <a href="{{ route('author-detail', ['name' => $item->author->name]) }}" class="card-meta-author">
                                             <img src="{{ asset('storage/user/' . $item->author->avatar) }}">
                                             <span>{{ $item->author->name }}</span>
                                         </a>

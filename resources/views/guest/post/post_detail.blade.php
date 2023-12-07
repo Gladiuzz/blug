@@ -1,6 +1,6 @@
 @extends('layouts.app_guest')
 
-
+@section('title', 'Blug | ' . $post->title)
 @section('content')
     <div class="py-4"></div>
     <section class="section">
@@ -35,7 +35,7 @@
                             </li>
                         </ul>
                         <div class="content">
-                            {!! $post->content !!}
+                            {!! str_replace('<img class="center"', '<img class="mx-auto d-block"', $post->content) !!}
                         </div>
                     </article>
 

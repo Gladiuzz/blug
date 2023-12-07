@@ -24,7 +24,7 @@
                 <img alt="image" class="img-fluid" src="{{ asset('storage/post/' . $post->thumbnail) }}">
             </div>
             {{-- content post --}}
-            {!! $post->content !!}
+            {!! str_replace('<img class="center"', '<img class="mx-auto d-block"', $post->content) !!}
             <center>
             </center>
             <hr>

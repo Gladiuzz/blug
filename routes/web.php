@@ -20,6 +20,11 @@ Route::group(['prefix' => 'blog'], function() {
     Route::get('/{title}', [HomeController::class, 'blogDetail'])->name('blog-detail');
 });
 
+Route::group(['prefix' => 'author'], function() {
+    Route::get('/', [HomeController::class, 'author'])->name('authors');
+    Route::get('/{name}', [HomeController::class, 'authorTitle'])->name('author-detail');
+});
+
 // From laravel auth
 Auth::routes();
 
@@ -37,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Post
     Route::resource('post', PostController::class);
+    Route::get('/post/update-status/{post}', [PostController::class, 'updateStatus'])->name('post.status.update');
 
     // Profile
     Route::resource('profile', ProfileController::class);

@@ -9,7 +9,7 @@
                 </div>
                 <div class="media-body">
                     <h5 class="mb-1"><a class="post-title"
-                            href="author-single.html">{{ $item->name }}</a>
+                            href="{{ route('author-detail', ['name' => $item->name]) }}">{{ $item->name }}</a>
                     </h5>
                     {{-- <span>Author &amp; developer of Bexer, Biztrox theme</span> --}}
                 </div>

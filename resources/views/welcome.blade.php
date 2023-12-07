@@ -1,6 +1,6 @@
 @extends('layouts.app_guest')
 
-@section('title', 'Blog Website')
+@section('title', 'Blug')
 
 @section('content')
     <!-- start of banner -->
@@ -22,10 +22,12 @@
                                     </div>
                                     <div class="card-body">
                                         <h3 class="h4 mb-3"><a class="post-title"
-                                                href="post-details.html">{{ $item->title }}</a></h3>
+                                                href="{{ route('blog-detail', ['title' => $item->title]) }}">{{ $item->title }}</a>
+                                        </h3>
                                         <ul class="card-meta list-inline">
                                             <li class="list-inline-item">
-                                                <a href="author-single.html" class="card-meta-author">
+                                                <a href="{{ route('author-detail', ['name' => $item->author->name]) }}"
+                                                    class="card-meta-author">
                                                     <img src="{{ asset('storage/user/' . $item->author->avatar) }}">
                                                     <span>{{ $item->author->name }}</span>
                                                 </a>
@@ -41,7 +43,8 @@
                                                 <ul class="card-meta-tag list-inline">
                                                     @foreach ($item->categories as $items)
                                                         <li class="list-inline-item"><a
-                                                                href="{{ route('blog', ['tag' => $item->name]) }}">{{ $items->name }}</a></li>
+                                                                href="{{ route('blog', ['tag' => $item->name]) }}">{{ $items->name }}</a>
+                                                        </li>
                                                     @endforeach
                                                 </ul>
                                             </li>

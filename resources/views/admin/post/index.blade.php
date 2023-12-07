@@ -45,11 +45,16 @@
                                 <td>{{ $item->author->name }}</td>
                                 <td>
                                     @foreach ($item->categories as $category)
-                                    <small class="label label-secondary mr-1    "> {{ $category->name }}</small>
+                                        <small class="label label-secondary mr-1    "> {{ $category->name }}</small>
                                     @endforeach
                                 </td>
                                 <td>
+                                    @if ($item->status == 'Published')
+                                    <small class="label label-primary mr-1    "> {{ $item->status }}</small>
+                                    @else
                                     <small class="label label-success mr-1    "> {{ $item->status }}</small>
+
+                                    @endif
                                 </td>
                                 <td>
                                     <a href="{{ route('post.show', ['post' => $item->id]) }}"><i
@@ -58,6 +63,10 @@
                                             class='fa btn btn-warning fa-edit'></i></a>
                                     <a href="#" data-toggle="modal" data-target="#delete{{ $item->id }}"> <i
                                             class='fa fa-trash btn btn-danger'></i></a>
+                                    @if ($item->status != 'Published')
+                                        <a href="{{ route('post.status.update', ['post' => $item->id]) }}"><i
+                                                class='fa btn btn-secondary'>Publish</i></a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

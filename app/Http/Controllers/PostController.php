@@ -189,4 +189,14 @@ class PostController extends Controller
 
         return redirect()->route('post.index')->with('success', 'Post deleted successfully');
     }
+
+    public function updateStatus($id)
+    {
+        $post = Post::findorFail($id);
+
+        $post['status'] = 'Published';
+        $post->update();
+
+        return redirect()->route('post.index')->with('success', 'Post updated successfully');
+    }
 }

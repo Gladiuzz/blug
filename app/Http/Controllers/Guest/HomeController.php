@@ -15,6 +15,7 @@ class HomeController extends Controller
         $user = User::where('role', '!=', 'Admin')
             ->get();
         $post = Post::take(5)
+            ->where('status', 'Published')
             ->orderBy('id', 'desc')
             ->get();
 
@@ -40,6 +41,7 @@ class HomeController extends Controller
         $tag = $request->tag;
 
         $post = Post::query()
+            ->where('status', 'Published')
             ->where(function ($query) use ($search) {
                 $query->where('title', 'like', '%' . $search . '%');
             })
@@ -77,5 +79,17 @@ class HomeController extends Controller
         // dd($title);
 
         return view('guest.post.post_detail', compact('post'));
+    }
+
+    public function authorTitle($name)
+    {
+        $author = User::where('name', $name)
+            ->with(['post' => function ($query) {
+                $query->where('status', 'Published');
+                $query->orderBy('created_at', 'desc');
+            }])
+            ->first();
+
+        return view('guest.author.author_detail', compact('author'));
     }
 }
