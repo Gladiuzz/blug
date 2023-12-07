@@ -56,11 +56,33 @@
                                 </article>
                             </div>
                         @endforeach
+
                         {{-- end post card --}}
                     </div>
                 </div>
                 @include('includes.sidebar_guest')
             </div>
+            <ul class="pagination justify-content-start">
+                @if ($post->onFirstPage())
+                    <li class="page-item">
+                        <a href="#!" class="page-link">&laquo;</a>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a href="{{ $post->previousPageUrl() }}" class="page-link">&laquo;</a>
+                    </li>
+                @endif
+                @for ($i = 1; $i <= $post->lastPage(); $i++)
+                    <li class="page-item page-item {{ $i == $post->currentPage() ? 'active' : '' }}">
+                        <a href="{{ $post->url($i) }}" class="page-link">{{ $i }}</a>
+                    </li>
+                @endfor
+                @if ($post->hasMorePages())
+                    <li class="page-item">
+                        <a href="{{ $post->nextPageUrl() }}" class="page-link">&raquo;</a>
+                    </li>
+                @endif
+            </ul>
         </div>
     </section>
 @endsection

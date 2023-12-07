@@ -13,7 +13,7 @@ class Post extends Model
     protected $table = 'posts';
 
     protected $fillable = [
-        'author_id','thumbnail','title','content','status'
+        'author_id', 'thumbnail', 'title', 'content', 'status'
     ];
 
     public function categories()
@@ -29,12 +29,14 @@ class Post extends Model
     public function getTanggal()
     {
         return Carbon::parse($this->attributes['created_at'])
-        ->translatedFormat('l, d F Y');
+            ->translatedFormat('l, d F Y');
     }
 
     public function getShortDate()
     {
         return Carbon::parse($this->attributes['created_at'])
-        ->translatedFormat('d M Y');
+            ->translatedFormat('d M Y');
     }
+
+
 }

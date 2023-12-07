@@ -14,10 +14,9 @@ class HomeController extends Controller
     {
         $user = User::where('role', '!=', 'Admin')
             ->get();
-        $post = Post::take(5)
-            ->where('status', 'Published')
+        $post = Post::where('status', 'Published')
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(6);
 
         $category = Category::all();
 
@@ -49,7 +48,7 @@ class HomeController extends Controller
                 $query->where('name', 'like', '%' . $tag . '%');
             })
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(6);
 
         // if ($search) {
         //     $post = Post::orderBy('id', 'desc')
@@ -84,12 +83,14 @@ class HomeController extends Controller
     public function authorTitle($name)
     {
         $author = User::where('name', $name)
-            ->with(['post' => function ($query) {
-                $query->where('status', 'Published');
-                $query->orderBy('created_at', 'desc');
-            }])
             ->first();
+        $post = $author->paginatePost();
 
-        return view('guest.author.author_detail', compact('author'));
+        $data = array(
+            'author' => $author,
+            'post' => $post
+        );
+
+        return view('guest.author.author_detail', $data);
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app_guest')
 
-@section('title', 'Blug | Posts' )
+@section('title', 'Blug | Posts')
 
 
 @section('content')
@@ -23,10 +23,13 @@
                                     alt="post-thumb" style="object-fit: cover; height: 300px">
                             </div>
                             <div class="card-body">
-                                <h3 class="mb-3"><a class="post-title" href="{{ route('blog-detail', ['title' => $item->title]) }}">{{ $item->title }}</a></h3>
+                                <h3 class="mb-3"><a class="post-title"
+                                        href="{{ route('blog-detail', ['title' => $item->title]) }}">{{ $item->title }}</a>
+                                </h3>
                                 <ul class="card-meta list-inline">
                                     <li class="list-inline-item">
-                                        <a href="{{ route('author-detail', ['name' => $item->author->name]) }}" class="card-meta-author">
+                                        <a href="{{ route('author-detail', ['name' => $item->author->name]) }}"
+                                            class="card-meta-author">
                                             <img src="{{ asset('storage/user/' . $item->author->avatar) }}">
                                             <span>{{ $item->author->name }}</span>
                                         </a>
@@ -41,7 +44,8 @@
                                     <li class="list-inline-item">
                                         <ul class="card-meta-tag list-inline">
                                             @foreach ($item->categories as $items)
-                                                <li class="list-inline-item"><a href="{{ route('blog', ['tag' => $item->name]) }}">{{ $items->name }}</a>
+                                                <li class="list-inline-item"><a
+                                                        href="{{ route('blog', ['tag' => $item->name]) }}">{{ $items->name }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -57,6 +61,27 @@
                 </div>
                 @include('includes.sidebar_guest')
             </div>
+            <ul class="pagination justify-content-start">
+                @if ($post->onFirstPage())
+                    <li class="page-item">
+                        <a href="#!" class="page-link">&laquo;</a>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a href="{{ $post->previousPageUrl() }}" class="page-link">&laquo;</a>
+                    </li>
+                @endif
+                @for ($i = 1; $i <= $post->lastPage(); $i++)
+                    <li class="page-item page-item {{ $i == $post->currentPage() ? 'active' : '' }}">
+                        <a href="{{ $post->url($i) }}" class="page-link">{{ $i }}</a>
+                    </li>
+                @endfor
+                @if ($post->hasMorePages())
+                    <li class="page-item">
+                        <a href="{{ $post->nextPageUrl() }}" class="page-link">&raquo;</a>
+                    </li>
+                @endif
+            </ul>
         </div>
     </section>
 @endsection

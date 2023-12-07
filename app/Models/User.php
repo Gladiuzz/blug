@@ -49,4 +49,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class, 'author_id', 'id');
     }
+
+    public function paginatePost()
+    {
+        return $this->post()
+            ->where('status', 'Published')
+            ->orderBy('created_at', 'desc')
+            ->paginate('6');
+    }
 }
