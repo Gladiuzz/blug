@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -82,6 +83,8 @@ class ProfileController extends Controller
         ]);
 
         $user = User::findorFail($id);
+        $detail = UserDetail::where('user_id', $id)->first();
+
         $image = $request->file('avatar');
 
         $data = $request->except('_token');
@@ -103,6 +106,7 @@ class ProfileController extends Controller
         }
 
         $user->update($data);
+        $detail->update($data);
 
 
         return redirect()->route('profile.index')->with('success', 'Profile updated successfully');

@@ -15,7 +15,7 @@
                         <h1 class="h2">{{ $post->title }}</h1>
                         <ul class="card-meta my-3 list-inline">
                             <li class="list-inline-item">
-                                <a href="author-single.html" class="card-meta-author">
+                                <a href="{{ route('author-detail', ['name' => $post->author->name]) }}" class="card-meta-author">
                                     <img src="{{ asset('storage/user/' . $post->author->avatar) }}">
                                     <span>{{ $post->author->name }}</span>
                                 </a>
@@ -44,59 +44,61 @@
                 <div class="col-lg-9 col-md-12">
                     <div class="mb-5 border-top mt-4 pt-5">
                         <h3 class="mb-4">Comments</h3>
+                        @foreach ($post->comment as $comment)
+                            <div class="media d-block d-sm-flex mb-4 pb-4">
+                                <a class="d-inline-block mr-2 mb-3 mb-md-0" href="#">
+                                    <img src="{{ asset('storage/user/' . $comment->user->avatar) }}"
+                                        class="mr-3 rounded-circle avatar-img img-fluid" alt=""
+                                        style="    width: 80px;
+                                    height: 80px;
+                                    overflow: hidden;
+                                    display: flex;
+                                    justify-content: center;
+                                    object-fit: cover;
+                                    align-items: center;">
+                                </a>
+                                <div class="media-body">
+                                    <a href="#!" class="h4 d-inline-block mb-3">{{ $comment->user->name }}</a>
 
-                        <div class="media d-block d-sm-flex mb-4 pb-4">
-                            <a class="d-inline-block mr-2 mb-3 mb-md-0" href="#">
-                                <img src="images/post/user-01.jpg" class="mr-3 rounded-circle" alt="">
-                            </a>
-                            <div class="media-body">
-                                <a href="#!" class="h4 d-inline-block mb-3">Alexender Grahambel</a>
+                                    <p>
+                                        {{ $comment->comment }}
+                                    </p>
 
-                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                    sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                    condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                </p>
-
-                                <span class="text-black-800 mr-3 font-weight-600">April 18, 2020 at 6.25 pm</span>
-                                <a class="text-primary font-weight-600" href="#!">Reply</a>
+                                    <span class="text-black-800 mr-3 font-weight-600">{{ $comment->getDate() }}</span>
+                                    {{-- <a class="text-primary font-weight-600" href="#!">Reply</a> --}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="media d-block d-sm-flex">
-                            <div class="d-inline-block mr-2 mb-3 mb-md-0" href="#">
-                                <img class="mr-3" src="images/post/arrow.png" alt="">
-                                <a href="#!"><img src="images/post/user-02.jpg" class="mr-3 rounded-circle"
-                                        alt=""></a>
-                            </div>
-                            <div class="media-body">
-                                <a href="#!" class="h4 d-inline-block mb-3">Nadia Sultana Tisa</a>
-
-                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                    sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                    condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                </p>
-
-                                <span class="text-black-800 mr-3 font-weight-600">April 18, 2020 at 6.25 pm</span>
-                                <a class="text-primary font-weight-600" href="#!">Reply</a>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </div>
+                    @endif
+                    @if (session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
                     <div>
                         <h3 class="mb-4">Leave a Reply</h3>
-                        <form method="POST">
+                        <form method="POST" action="{{ route('comment.store') }}" enctype="multipart/form-data"
+                            role="form">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <textarea class="form-control shadow-none" name="comment" rows="7" required></textarea>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <input class="form-control shadow-none" type="text" placeholder="Name" required>
+                                    <input class="form-control shadow-none" name="name" type="text" placeholder="Name"
+                                        value="{{ @Auth::user()->name }}" required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <input class="form-control shadow-none" type="email" placeholder="Email" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <input class="form-control shadow-none" type="url" placeholder="Website">
-                                    <p class="font-weight-bold valid-feedback">OK! You can skip this field.</p>
+                                    <input class="form-control shadow-none" name="email" type="email"
+                                        placeholder="Email" value="{{ @Auth::user()->email }}" required>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit">Comment Now</button>

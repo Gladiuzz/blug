@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Guest\CommentController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PostController;
@@ -46,5 +47,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Profile
     Route::resource('profile', ProfileController::class);
+
+    // Comment (from guest page)
+    Route::resource('comment', CommentController::class);
 });
 

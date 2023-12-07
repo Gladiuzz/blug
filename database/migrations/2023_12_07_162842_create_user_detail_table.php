@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('user_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->string('job');
-            $table->string('description');
+            $table->string('job')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
+
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

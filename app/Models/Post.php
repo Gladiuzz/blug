@@ -26,6 +26,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'id');
+    }
+
     public function getTanggal()
     {
         return Carbon::parse($this->attributes['created_at'])

@@ -33,12 +33,16 @@
                     </div>
                     <div class="ibox-content profile-content">
                         <h4><strong>{{ $user->name }}</strong></h4>
-                        {{-- <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p> --}}
+                        <p><i class="fa fa-book"></i> {{ $user->userDetail->job }}</p>
                         <h5>
                             About me
                         </h5>
                         <p>
-                            No Description
+                            @if ($user->userDetail->description == 'null')
+                                No Description
+                            @else
+                                {{ $user->userDetail->description }}
+                            @endif
                         </p>
                         <div class="row m-t-lg">
                             <div class="col-md-4">

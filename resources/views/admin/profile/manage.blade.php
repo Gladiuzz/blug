@@ -45,6 +45,15 @@
                     <label>Password</label>
                     <input type="password" placeholder="Enter Password" name="password" class="form-control">
                 </div>
+                <hr>
+                <div class="form-group">
+                    <label>Job</label>
+                    <input type="text" placeholder="Enter Job (optional)" name="job" value="{{ old('description', @$user->userDetail->job) }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" name="description" id="exampleTextarea" rows="3">{{ old('description', @$user->userDetail->description) }}</textarea>
+                </div>
                 <div class="form-group">
                     <label for="example-text-input" class="form-control-label">Upload Avatar</label>
                     <input class="form-control" value="{{ old('avatar', @$user->avatar) }}" type="file" name="avatar">

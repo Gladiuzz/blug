@@ -13,10 +13,15 @@
                 </div>
                 <div class="col-md-8 col-lg-6 text-center text-md-left">
                     <h3 class="mb-2">{{ $author->name }}</h2>
-                        <strong class="mb-2 d-block">Author &amp; developer of Bexer, Biztrox theme</strong>
+                        @if ($author->userDetail->description != 'null')
+                            <strong class="mb-2 d-block">{{ $author->userDetail->job }}</strong>
+                        @endif
                         <div class="content">
-                            <p>No Description
-                            </p>
+                            @if ($author->userDetail->description == 'null')
+                                No Description
+                            @else
+                                {{ $author->userDetail->description }}
+                            @endif
 
                         </div>
 
@@ -102,11 +107,12 @@
 
                             <div class="card-body">
                                 <h3 class="mb-3"><a class="post-title"
-                                        href="{{ route('author-detail', ['name' => $item->author->name]) }}">{{ $item->title }}</a>
+                                        href="{{ route('blog-detail', ['title' => $item->title]) }}">{{ $item->title }}</a>
                                 </h3>
                                 <ul class="card-meta list-inline">
                                     <li class="list-inline-item">
-                                        <a href="author-single.html" class="card-meta-author">
+                                        <a href="{{ route('author-detail', ['name' => $item->author->name]) }}"
+                                            class="card-meta-author">
                                             <img src="{{ asset('storage/user/' . $item->author->avatar) }}">
                                             <span>{{ $item->author->name }}</span>
                                         </a>
