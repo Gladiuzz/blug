@@ -54,9 +54,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('blog') }}">Blog</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="shop.html">About</a>
-                        </li>
+                        </li> --}}
                         @if (Auth::user())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">{{ Auth::user()->name }}</a>

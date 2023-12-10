@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Guest\CommentController;
 use App\Http\Controllers\Guest\HomeController;
-use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     // Category Post
-    Route::resource('post-category', PostCategoryController::class);
+    Route::resource('post-category', CategoryController::class);
 
     // User
     Route::resource('user', UserController::class);

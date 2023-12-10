@@ -50,10 +50,9 @@
                                 </td>
                                 <td>
                                     @if ($item->status == 'Published')
-                                    <small class="label label-primary mr-1    "> {{ $item->status }}</small>
+                                        <small class="label label-primary mr-1    "> {{ $item->status }}</small>
                                     @else
-                                    <small class="label label-success mr-1    "> {{ $item->status }}</small>
-
+                                        <small class="label label-success mr-1    "> {{ $item->status }}</small>
                                     @endif
                                 </td>
                                 <td>

@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
+                'id' => 1,
                 'name' => 'admin',
                 'username' => 'admin',
                 'email' => 'admin@mail.com',
@@ -26,6 +27,12 @@ class UserSeeder extends Seeder
             ],
         ];
 
+
         DB::table('users')->insert($data);
+        DB::table('user_detail')->insert([
+            'user_id' => $data[0]['id'],
+            'job' => 'Admin',
+            'description' => 'Admin Description'
+        ]);
     }
 }

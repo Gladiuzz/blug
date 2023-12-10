@@ -19,6 +19,55 @@
 <!-- <li><strong>Notifications:</strong> Receive alerts about responses, comments, or new followers.</li> -->
 </ul>
 </div>
+
+## Installation
+
+To run the Blug platform locally, follow these installation steps
+
+Clone Repository:
+
+```bash
+    git clone https://github.com/projectname/blug.git
+```
+
+Install Dependencies:
+
+```bash
+    cd blug
+    composer install
+    npm install
+```
+
+create app key:
+
+```bash
+    php artisan key:generate
+```
+
+link storage:
+
+```bash
+    php artisan storage:link
+```
+
+Configure Database Create a .env file from .env.example and adjust the database settings.
+
+Migrate and Seed Database:
+
+```bash
+    php artisan migrate
+```
+
+```bash
+    php artisan db:seed
+```
+
+Run Local Server:
+
+```bash
+    php artisan serve
+```
+
 </body>
 
 </html>

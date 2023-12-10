@@ -102,7 +102,12 @@ class CategoryController extends Controller
     {
         $category = Category::findorFail($id);
 
-        $category->delete();
+        if ($category->post()->count() > 0) {
+            return redirect()->back()->with('error', 'Category cannot be deleted as it still has associated posts!');
+        } else {
+            $category->delete();
+        }
+
 
         return redirect()->route('post-category.index')->with('success', 'Category post updated successfully');
     }
